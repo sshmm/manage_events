@@ -16,19 +16,27 @@ datasource db {
 model member {
   id         String @id @default(cuid())
   actor_name String @unique
+  email   String @unique
   group      String
   event      event[] @relation(name: "memberToevents")
 }
 
 model event {
   id          String   @id @default(cuid())
-  target_id   String?
+  target_id   String
   location    String?
   occurred_at DateTime @default(now())
   metadata    Json?    @db.Json
-  targe_name  String?
-  action      Json     @db.Json
+  target_name  String
   actor       member   @relation(name: "memberToevents", fields: [actor_id], references: [id])
   actor_id     String
-  actor_name  String
+  action      action?  @relation(name: "actionToevent", fields: [action_id], references: [id])
+  action_id    String?
+}
+
+model action {
+  id     String @id @default(cuid())
+  name   String @unique
+  object String
+  event  event[] @relation(name: "actionToevent")
 }
