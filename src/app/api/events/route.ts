@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-export const fetchEvents = async ({
+const fetchEvents = async ({
   skip,
   pageSize,
   filters,

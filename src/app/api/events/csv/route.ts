@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-export const fetchEvents = async ({ filters }: { filters: any }) => {
+const fetchEvents = async ({ filters }: { filters: any }) => {
   console.log(filters);
   const events = await prisma.event.findMany({
     where: {
