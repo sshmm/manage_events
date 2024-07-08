@@ -50,9 +50,11 @@ const EventTable = () => {
       <EventTablePage
         key={i}
         page={i + 1}
+        setSelectedEvent={setSelectedEvent}
         filters={selectedFilters}
         search={search}
         setTotalEvents={setTotalEvents}
+        selectedEvent={selectedEvent}
       />
     );
   }
@@ -101,16 +103,10 @@ const EventTable = () => {
           handleFilterChange={handleFilterChange}
         />
       )}
-      <div className="grid grid-cols-3 justify-start  w-full p-4 rounded-lg shadow-md border-b border-zinc-100">
-        <div className="px-6 py-4 text-left font-medium text-gray-900">
-          Actor
-        </div>
-        <div className="px-6 py-4 text-left font-medium text-gray-900">
-          Action
-        </div>
-        <div className="px-6 py-4 text-left font-medium text-gray-900">
-          Date
-        </div>
+      <div className="grid grid-cols-3 justify-start  w-full px-4 py-2 rounded-lg shadow-md border-b border-zinc-100">
+        <div className="text-left font-semibold text-gray-900">ACTOR</div>
+        <div className="text-left font-semibold text-gray-900">ACTION</div>
+        <div className="text-left font-semibold text-gray-900">DATE</div>
       </div>
       <div className="w-full">
         {pages.length ? pages : <div>Loading...</div>}

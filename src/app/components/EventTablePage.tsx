@@ -18,13 +18,17 @@ interface FilterDropdownProps {
   page: number;
   search: String;
   filters: Filters;
+  setSelectedEvent: Dispatch<SetStateAction<Event | null>>;
   setTotalEvents: Dispatch<SetStateAction<number>>;
+  selectedEvent: Event | null;
 }
 
 const EventTablePage: React.FC<FilterDropdownProps> = ({
   page,
   search,
   filters,
+  setSelectedEvent,
+  selectedEvent,
   setTotalEvents,
 }) => {
   const { data, error } = useSWR(
@@ -41,13 +45,15 @@ const EventTablePage: React.FC<FilterDropdownProps> = ({
     return <div className="text-center  whitespace-nowrap">Loading...</div>;
 
   setTotalEvents(data.totalEvents);
+  console.log(selectedEvent);
   return (
     <>
       {data.events.map((event: Event) => (
         <>
           <div
             key={event.id}
-            className="grid grid-cols-3 justify-start bg-white  w-full p-4  shadow-md border-b border-zinc-100"
+            className="grid grid-cols-3 justify-start bg-white  w-full p-4  shadow-md border-b border-zinc-100 cursor-pointer"
+            onClick={() => setSelectedEvent(event)}
           >
             <div className="text-gray-900">{event.actor.actor_name}</div>
             <div className="text-gray-900">{event.action.name}</div>
@@ -55,6 +61,12 @@ const EventTablePage: React.FC<FilterDropdownProps> = ({
               {new Date(event.occurred_at).toLocaleString()}
             </div>
           </div>
+          {selectedEvent && selectedEvent.id === event.id && (
+            <EventDetailsModal
+              event={selectedEvent}
+              onClose={() => setSelectedEvent(null)}
+            />
+          )}
         </>
       ))}
     </>
